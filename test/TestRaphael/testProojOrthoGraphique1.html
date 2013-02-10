@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<script src="raphael.js"></script>
+<script src="cartoTool.js"></script>
+<script src="worldOceanMap110m.js"></script>
+
+<script type="text/javascript">
+	
+	// en dregres , distance angulaire entre parallèle et meridien
+	
+	var rayonTerre = 6371000.0;
+	var coeffDisplay = 300;
+	var offsetDisplay = 400;
+	var deg2Rad = Math.PI / 180;
+	
+	//en radians
+	var ppLon = 0 * deg2Rad;
+	var ppLat = 45 * deg2Rad;
+	var definition = 5 * deg2Rad;
+	var errAngle = 1 * deg2Rad
+	var lonW = -60 * deg2Rad;
+	var lonE = 60 * deg2Rad;
+	var latS = 30 * deg2Rad;
+	var latN = 80 * deg2Rad;
+	
+	//le coeff de zoom dépend de la distnce du point de projection a 1 coin
+	coeffDisplay = coeffDisplay / distance(ppLat, ppLon, latN, lonW) 
+	
+	//var offsetX = getCartX(latN-latS, lonE-lonW) * coeffDisplay;
+	//var offsetY = getCartY(latN-latS, lonE-lonW) * coeffDisplay;
+	var offsetX = getCartX(ppLat, ppLon) * coeffDisplay + 300;
+	var offsetY = getCartY(ppLat, ppLon) * coeffDisplay + 300;
+	
+	
+	var paper;
+	window.onload = function () {
+		var polygonsOcean = loadOceanMap(worldOceanMap);
+		
+		//Canvas
+	 	 paper = Raphael(10, 10, 1280, 960);
+	 
+// 	 	circle = paper.circle(50, 40, 10);
+// 		circle.attr("fill", "#f00");
+// 		circle.attr("stroke", "#fff");
+		
+		var latr;
+		var lonr;
+		var polygonsMeridien = new Array();
+		var polygonsParallele = new Array();
+		var meridien= new Array();
+		var parallele = new Array();
+		//Construction des meridiens et des paralleles
+		for (var lonr=lonW;lonr<lonE + errAngle;lonr=lonr+definition) {
+			meridien= new Array();
+			for (var latr = latS; latr<latN + errAngle; latr = latr + definition) {
+				meridien.push(new PointGps(latr, lonr))
+			}  
+			polygonsMeridien.push(meridien);
+		}
+		
+		for (var latr = latS; latr<latN + errAngle; latr = latr + definition) {
+			parallele= new Array();
+			for (var lonr=lonW;lonr<lonE + errAngle;lonr=lonr+definition) {
+				parallele.push(new PointGps(latr, lonr))
+			}  
+			polygonsParallele.push(parallele);
+		}
+
+		
+		//Draw all polygons
+		drawPolygons(polygonsOcean, "#000000")
+		drawPolygons(polygonsMeridien, "#0000AA")
+		drawPolygons(polygonsParallele, "#AA0000")
+		
+	}
+	
+	function drawPolygons(polygons, color) {
+		var pathPays = "";
+		var y;
+		var y;
+		var point;
+		var polygonsVisible = getVisiblePolygon(polygons)
+		for (poly in polygonsVisible) {
+			pathPays = "";
+			for (pt in polygonsVisible[poly]) {
+				point = polygonsVisible[poly][pt]
+				x = coeffDisplay * getCartX(point.lat, point.lon ) + offsetX;
+				y = - coeffDisplay * getCartY(point.lat, point.lon) + offsetY;
+				if (pathPays == "") {						
+						pathPays="M" + x +"," + y;
+				}
+				pathPays = pathPays + "L" + x + "," + y;
+			}
+			paper.path(pathPays).attr({stroke: color})
+		}
+	}
+	
+	function getCartX(lat, lon) {
+		return Math.cos(lat)*Math.sin(lon-ppLon);
+	}
+	
+	function getCartY(lat, lon) {
+		return (Math.cos(ppLat)*Math.sin(lat)- Math.cos(lat)*Math.sin(ppLat)*Math.cos(lon-ppLon));
+	}
+	
+	//lat, lon => point dont on veut connaitre la visiblite
+	//pplat, pplon => point de projection (centre de la carte)
+	function isVisible(lat, lon) {
+		if(lat <= latN && lat >= latS &&  lon > lonW && lon <= lonE) {
+			return Math.sin(ppLat) * Math.sin(lat) + Math.cos(ppLat) * Math.cos(lat)*Math.cos(lon-ppLon) > 0;
+		} else {
+			return false;
+		}
+	}
+	
+	function distance(lat1 ,  lon1, lat2, lon2) {
+		return Math.acos(Math.sin(lat1) * Math.sin(lat2) + Math.cos(lat1) * Math.cos(lat2) * Math.cos(lon1 - lon2));		
+	}
+	
+	// Retourne un tableau de polygon visible (ligne brisee) en fonction de la fonction de visibilité
+	// data est un tableau de polygon, chaque polygon est traité independemment.
+	// si un point est invisible la ligne est interompue, et on en recommence une nouvelle dès qu'un point réapparait
+	// dans l'alogo ci dessous les condition pour commencer une nouvelle ligne brisée, sont
+	// - on change de polygon dans le data d'entrée
+	// - une ligne est interompue, 
+	// ce sont les même conditions que pour pousser le polygon courant dans le tableau retourné
+	function getVisiblePolygon(data) {
+		var polygons = new Array();
+		var polygon = new Array();
+		var pt;
+		for (i in data) {			
+			polygon = new Array();
+			for ( j in data[i]) {
+				pt = data[i][j];
+				if (isVisible(pt.lat, pt.lon)) {
+					polygon.push(pt)
+				} else {
+					if (polygon.length >0) { 
+						polygons.push(polygon)
+						polygon = new Array();
+					}
+				}
+			}
+			if (polygon.length >0) { 
+				polygons.push(polygon)
+			}
+
+		}
+		return polygons;
+	}
+	
+
+</script>
+</head>
+<body>
+	
+</body>
+</html>

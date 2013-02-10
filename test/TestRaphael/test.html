@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<script src="raphael.js"></script>
+<script type="text/javascript">
+	var el;
+	var pays;
+	var circle
+	window.onload = function () {
+
+		//Creates canvas 320 × 200 at 10, 50
+		var paper = Raphael(10, 50, 640, 480);
+		
+		// Creates circle at x = 50, y = 40, with radius 10
+		 circle = paper.circle(50, 40, 10);
+		// Sets the fill attribute of the circle to red (#f00)
+		circle.attr("fill", "#f00");
+		
+		// Sets the stroke attribute of the circle to white
+		circle.attr("stroke", "#fff");
+		
+		
+		el = paper.rect(40, 100, 40, 40);
+		el.attr("fill", "#00ff00");
+		// translate 100, 100, rotate 45°, translate -100, 0
+		//el.transform("t100,100r45t-100,0");
+		// if you want you can append or prepend transformations
+		//el.transform("...t50,50");
+		//el.transform("s2...");
+		// or even wrap
+		//el.transform("t50,50...t-50-50");
+		// to reset transformation call method with empty string
+		//el.transform("");
+		// to get current value call it without parameters
+		//console.log(el.transform());
+		
+		desc = "m100,40l-0.515,-0.387l0.900,-2.960l4.378,0l0.128,3.219l-3.988,0l0.903,-0.128z"			
+		pays = paper.path(desc).attr({stroke: "#000000", fill: "#f0efeb"})
+		pays.transform('s20')
+		
+		pays.drag(move, start, up);
+		circle.drag(move, start, up);
+		el.drag(move, start, up)
+		
+	}
+	
+	function start() {
+	    // storing original coordinates
+	    this.ox = this.attr("x");
+	    this.oy = this.attr("y");
+	    //this.attr({opacity: 1});
+	}
+	function move(dx, dy) {
+		//this.ox = this.ox + dx;
+		//this.oy = this.oy + dy;
+	    // move will be called with dx and dy
+	    //this.attr({x: this.ox, y: this.oy});
+	    //this.translate(dx, dy);
+	    this.transform('t' + dx + ',' + dy);
+	}
+	
+	function up() {
+		//this.attr({x: this.ox, y: this.oy});
+	    // restoring state
+	    //this.attr({opacity: .5});
+	}
+
+</script>
+</head>
+<body>
+	<input type="button" value="scale" onclick="pays.transform('s25')">
+</body>
+</html>

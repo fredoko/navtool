@@ -1,0 +1,14 @@
+
+#mafleche {
+		fill:none;
+		stroke:grey;
+		stroke-width:10px;
+		stroke-miterlimit:20;
+	}
+	
+	
+	#land {
+		fill:grey;
+		stroke:black;
+		stroke-width:1px;		
+	}

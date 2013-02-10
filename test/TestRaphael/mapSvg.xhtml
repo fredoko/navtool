@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>testSvg</title>
+<link rel="stylesheet" type="text/css" href="svg.css" />
+<script type="text/javascript" src="mapSvg.js"/>
+<script type="text/javascript" src="landhhd.js"/>
+</head>
+<body>
+
+
+<svg id ="svgBlock" width="1280px" height="720px" xml:lang="fr" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<title>Test</title>
+	
+	<defs>
+		<g id="mafleche">
+			<line x1="0" x2="0" y1="-25" y2="25"/>
+		 	<polyline points="-15,10 0,25 15,10"/>
+		</g>
+		
+	</defs>
+	
+	<rect x="0" y="0" width="1280" height="720"  style="fill:none;stroke:black;stroke-width:2px;"/>
+	
+	<!-- use id="toto" xlink:href="#ensemble" transform="translate(550,305)"/-->
+	
+	<g id="ensemble" transform="translate(-16000,-4200)" >
+			<rect x="0" y="0" width="30720" height="17280"  style="fill:#DDDDEE;stroke:lightgrey;stroke-width:2px;"/>
+			
+	</g>
+	
+
+</svg>
+
+<form id="form1">
+	Angle:<input name="angle" type = "text" value="45"/><br/>
+	Vitesse:<input name="vitesse" type="text" value="10"/><br/>
+	x:<input name="x" type="text" value="300"/><br/>
+	y:<input name="y" type="text" value="300"/><br/>
+	
+	<input type="button" value="addFleche" onclick="addFleche()"/>
+	<br/>
+	Log :<input name="log" type="text" value=""/><br/>
+	<input type="button" value="Draw earth" onclick="drawEarth()"/>
+	
+</form>
+
+</body>
+</html>

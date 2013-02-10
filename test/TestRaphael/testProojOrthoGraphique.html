@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<script src="raphael.js"></script>
+<script src="worldOceanMap110m.js"></script>
+
+<script type="text/javascript">
+	
+	// en dregres , distance angulaire entre parallèle et meridien
+	
+	var rayonTerre = 6371000.0;
+	var coeffDisplay = 300;
+	var offsetDisplay = 400;
+	var deg2Rad = Math.PI / 180;
+	
+	//en radians
+	var ppLon = 0 * deg2Rad;
+	var ppLat = 0 * deg2Rad;
+	var definition = 10 * deg2Rad;
+	var errAngle = 1 * deg2Rad
+	var lonW = 0 * deg2Rad;
+	var lonE = 360 * deg2Rad;
+	var latS = -90 * deg2Rad;
+	var latN = 90 * deg2Rad;
+	//var offsetX = getCartX(latN-latS, lonE-lonW) * coeffDisplay;
+	//var offsetY = getCartY(latN-latS, lonE-lonW) * coeffDisplay;
+	var offsetX = getCartX(ppLat, ppLon) * coeffDisplay + 300;
+	var offsetY = getCartY(ppLat, ppLon) * coeffDisplay + 300;
+	
+	var el;
+	var pays;
+	var point;
+	var circle;
+	window.onload = function () {
+		//Canvas
+	 	var paper = Raphael(10, 10, 1280, 960);
+	 
+// 	 	circle = paper.circle(50, 40, 10);
+// 		circle.attr("fill", "#f00");
+// 		circle.attr("stroke", "#fff");
+		
+		var latr;
+		var lonr;
+		var courbes = [];
+		var meridien="";
+		var parallele = [];
+		//Construction des courbes
+		for (var lonr=lonW;lonr<lonE + errAngle;lonr=lonr+definition) {
+			//lonr = lon* deg2Rad;
+			if( meridien != "") {
+				courbes.push(meridien);
+			}
+			meridien = "";
+			for (var latr = latS; latr<latN + errAngle; latr = latr + definition) {
+				//latr = lat * deg2Rad;
+				if ( isVisible(latr, lonr)) {
+					x = coeffDisplay * getCartX(latr, lonr) + offsetX;
+					y =  - coeffDisplay * getCartY(latr, lonr) + offsetY;
+					if (meridien == "") {
+						meridien="M" + x +"," + y;
+					}
+					meridien = meridien + "L" + x + "," + y;
+					
+					if (parallele[latr] == null) {
+						parallele[latr] = "M" + x +"," + y;
+					} 
+					parallele[latr] = parallele[latr] + "L" + x + "," + y;
+					
+					//point = paper.circle(x + offsetDisplay, y + offsetDisplay, 1)
+					//point.attr("stroke", "#000000");	
+				}  
+			}
+			
+		}
+		if( meridien != "") {
+			courbes.push(meridien);
+		}
+		for (s in courbes) {
+			//alert (s)
+			paper.path(courbes[s]).attr({stroke: "#000000"})
+		}
+		
+		for (s in parallele) {
+			//alert (s)
+			paper.path(parallele[s]).attr({stroke: "#0000AA"})
+		}
+		
+		var pathPays = "";
+		
+		for (i in worldOceanMap) {	
+			pathPays = ""
+			for ( j in worldOceanMap[i]) {
+				lat = worldOceanMap[i][j][0];
+				lon = worldOceanMap[i][j][1];
+				if ( isVisible(lat, lon)) {
+					x = coeffDisplay * getCartX(lat, lon ) + offsetX;
+					y = - coeffDisplay * getCartY(lat, lon) + offsetY;
+					if (pathPays == "") {
+						pathPays="M" + x +"," + y;
+					}
+					pathPays = pathPays + "L" + x + "," + y;
+				}
+			}
+			paper.path(pathPays).attr({stroke: "#AA0000"})
+		}
+		
+		//desc = "m100,40l-0.515,-0.387l0.900,-2.960l4.378,0l0.128,3.219l-3.988,0l0.903,-0.128z"			
+		//pays = paper.path(desc).attr({stroke: "#000000", fill: "#f0efeb"})
+		//pays.transform('s20')
+		
+		//pays.drag(move, start, up);
+		//circle.drag(move, start, up);
+		//el.drag(move, start, up)
+		
+	}
+	
+	function getCartX(lat, lon) {
+		return Math.cos(lat)*Math.sin(lon-ppLon);
+	}
+	
+	function getCartY(lat, lon) {
+		return (Math.cos(ppLat)*Math.sin(lat)- Math.cos(lat)*Math.sin(ppLat)*Math.cos(lon-ppLon));
+	}
+	
+	function isVisible(lat, lon) {
+		return Math.sin(ppLat) * Math.sin(lat) + Math.cos(ppLat) * Math.cos(lat)*Math.cos(lon-ppLon) > 0;
+	}
+	
+	function distance(lon1, lat1, lon2, lat2) {
+		return Math.acos(Math.sin(lata) * Math.sin(lat2) + Math.cos(lat1) * Math.cos(lat2) * Math.cos(lon1 - lon2));		
+	}
+	
+
+</script>
+</head>
+<body>
+	
+</body>
+</html>

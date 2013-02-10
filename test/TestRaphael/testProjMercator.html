@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<script src="raphael.js"></script>
+<script src="cartoTool.js"></script>
+<script src="worldOceanMapMercator110m.js"></script>
+
+<script type="text/javascript">
+	
+	// en dregres , distance angulaire entre parallèle et meridien
+	
+	var rayonTerre = 6371000.0;
+	var screenRapport = 16/9;
+	var mapWidth = 1200;	
+	var ratio;
+	var offsetX;
+	var offsetY;
+	var offsetDisplay = 10 // décalage d'affichage de la carte dans le canvas
+	var deg2Rad = Math.PI / 180;
+	
+	//En radians
+	var definition = 5 * deg2Rad;
+	
+	//Zone affichée exprimée en radian
+	//var pt1Gps = new PointGps(-75 * deg2Rad, -60 * deg2Rad)
+	//var pt2Gps = new PointGps(75 * deg2Rad, 60 * deg2Rad)
+	
+	//zone affichée avec point central et largeur
+	var mapDisplayLon = 360 * deg2Rad	
+	var ptCentre = new PointGps(0 * deg2Rad, 0 * deg2Rad);
+	
+	//Point central projeté en radians
+	var ptCentrexy = getMercXY(ptCentre)
+	
+	//Rapport entre les valeur en radian et en pixel
+	ratio = mapWidth/mapDisplayLon
+	
+	//Pour déterminer la limites en hauteur, on applique le ratio dans la limite d'un affichage 16/9 ou de 75,-75 en latitude
+	//Coins du carre projeté: nord ouest puis sub est
+	//Si le screenrapport appliqué à mapDisplayLon dépasse 150 ° alors on borne à 75,-75 sinon on garde la valeur
+	var mapDisplayLat = mapDisplayLon / screenRapport;
+	if (mapDisplayLat/deg2Rad >180) {
+		mapDisplayLat = 180 * deg2Rad
+	}
+	//Coins en gps
+	var pt1Gps = new PointGps(ptCentre.lat + mapDisplayLat/2, ptCentre.lon - mapDisplayLon/2)
+	var pt2Gps = new PointGps(ptCentre.lat - mapDisplayLat/2, ptCentre.lon + mapDisplayLon/2)
+	//coin projetés, l'unite est du radian
+	var pt1xy = getMercXY(pt1Gps)
+	var pt2xy = getMercXY(pt2Gps)
+	
+	
+	
+	//Décalage du y en pixel par rapport au donnnée d'affichage,
+	offsetY = mapDisplayLat * ratio/2 + offsetDisplay
+	
+	//l'offetX. Le zéro X est situé à lon=0. L'offset x est donc la distance entre le 0 de la carte et le bord gauche de la carte
+	//offsetX =  - pt1xy.getX() * ratio + offsetDisplay;
+	offsetX = mapWidth/2 + offsetDisplay
+	
+	//alert(ratio + ":" + offsetY  +":" + offsetX)
+		
+	var paper;
+	window.onload = function () {
+		var polygonsOcean = loadOceanMap(worldOceanMap);
+		
+		//Canvas
+	 	 paper = Raphael(10, 10, 1290, 730);
+		 var rect0 = paper.rect(0, 0, 1280, 720).attr("stroke", "#000000")
+		 var rect = paper.rect(offsetDisplay, offsetDisplay, offsetDisplay + mapWidth, offsetDisplay + mapDisplayLat * ratio ).attr("stroke", "#000000")
+	 
+// 	 	circle = paper.circle(50, 40, 10);
+// 		circle.attr("fill", "#f00");
+// 		circle.attr("stroke", "#fff");
+		
+		
+		//Draw all polygons
+		drawPolygons(polygonsOcean, "#000000")
+		
+		//
+		
+	}
+	
+	function drawPolygons(polygons, color) {
+		var pathPays = "";
+		var y;
+		var y;
+		var point;
+		var polygonsVisible = getVisiblePolygon(polygons)
+		//var polygonsVisible = polygons
+		for (poly in polygonsVisible) {
+			pathPays = "";
+			for (pt in polygonsVisible[poly]) {
+				point = polygonsVisible[poly][pt]
+				x = ratio * point.getX() + offsetX;
+				y = - ratio * point.getY() + offsetY;
+				if (pathPays == "") {						
+						pathPays="M" + x +"," + y;
+				}
+				pathPays = pathPays + "L" + x + "," + y;
+			}
+			paper.path(pathPays).attr({stroke: color})
+		}
+	}
+	
+	
+	function getMercXY(gps) {
+		var p = new PointGps();
+		p.setX(gps.lon);
+		p.setY( Math.log(Math.tan(Math.PI/4+gps.lat/2)));
+		return p;
+	}
+	
+	//lat, lon => point dont on veut connaitre la visiblite
+	//pplat, pplon => point de projection (centre de la carte)
+	function isVisible(pt) {
+		//return pt.getX() >= pt1xy.getX() && pt.getX() <= pt2xy.getX() && pt.getY() >= pt1xy.getY() && pt.getY() <= pt2xy.getY()
+		return pt.lat >= pt2Gps.lat && pt.lat <= pt1Gps.lat && pt.lon >= pt1Gps.lon && pt.lon <= pt2Gps.lon
+		//return true;
+	}
+	
+	function distance(lat1 ,  lon1, lat2, lon2) {
+		return Math.acos(Math.sin(lat1) * Math.sin(lat2) + Math.cos(lat1) * Math.cos(lat2) * Math.cos(lon1 - lon2));		
+	}
+	
+	// Retourne un tableau de polygon visible (ligne brisee) en fonction de la fonction de visibilité
+	// data est un tableau de polygon, chaque polygon est traité independemment.
+	// si un point est invisible la ligne est interompue, et on en recommence une nouvelle dès qu'un point réapparait
+	// dans l'alogo ci dessous les condition pour commencer une nouvelle ligne brisée, sont
+	// - on change de polygon dans le data d'entrée
+	// - une ligne est interompue, 
+	// ce sont les même conditions que pour pousser le polygon courant dans le tableau retourné
+	function getVisiblePolygon(data) {
+		var polygons = new Array();
+		var polygon = new Array();
+		var pt;
+		for (i in data) {			
+			polygon = new Array();
+			for ( j in data[i]) {
+				pt = data[i][j];
+				if (isVisible(pt)) {
+					polygon.push(pt)
+				} else {
+					if (polygon.length >0) { 
+						polygons.push(polygon)
+						polygon = new Array();
+					}
+				}
+			}
+			if (polygon.length >0) { 
+				polygons.push(polygon)
+			}
+
+		}
+		return polygons;
+	}
+	
+
+</script>
+</head>
+<body>
+	
+</body>
+</html>

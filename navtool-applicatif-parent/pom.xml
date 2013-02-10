@@ -1,0 +1,63 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  
+  
+	<parent>
+		 <groupId>org.ffo.archi</groupId>
+	  <artifactId>pom-parent</artifactId>
+	  <version>0.1-SNAPSHOT</version>
+	</parent>
+  
+  <groupId>org.ffo.navtool</groupId>
+  <artifactId>navtool-applicatif-parent</artifactId>
+  <version>0.1-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  
+  
+  <modules>
+		<module>navtool-applicatif-impl</module>
+		<module>navtool-applicatif-api</module>
+		<module>navtool-applicatif-web</module>
+	</modules>
+  
+  
+  <properties>
+		
+	</properties>
+  
+  <dependencyManagement>
+		<dependencies>
+		
+			<!--dependency>
+				<groupId>fr.tm.ima</groupId>
+				<artifactId>ima-configuration</artifactId>
+				<version>1.0</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency-->
+			
+			<!-- Dépendance module -->
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>navtool-applicatif-impl</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>navtool-applicatif-api</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>navtool-applicatif-web</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			
+			
+			
+			
+			
+		</dependencies>
+	</dependencyManagement>
+  
+</project>

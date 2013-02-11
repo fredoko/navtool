@@ -1,10 +1,16 @@
 package org.ffo.navtool.gps;
 
+import java.io.Serializable;
+
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  * @author Fred
  *
  */
-public class PointGps {
+@XmlRootElement
+public class PointGps implements Serializable {
 	
 	
 	/**

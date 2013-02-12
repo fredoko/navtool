@@ -1,8 +1,8 @@
 package org.ffo.navtool.carte;
 
 /**
- * Liste des différents niveau, la valeur et la taille de la case. 
- * LE choix d'appliquer le niveau en fonctionn de la taille de la fenètre et laisser à l'implémentation : bon choix ?
+ * Liste des diffÃ©rents niveau, la valeur et la taille de la case. 
+ * LE choix d'appliquer le niveau en fonctionn de la taille de la fenÃªtre et laisser ï¿½ l'implÃ©mentation : bon choix ?
  * @author Fred
  *
  */

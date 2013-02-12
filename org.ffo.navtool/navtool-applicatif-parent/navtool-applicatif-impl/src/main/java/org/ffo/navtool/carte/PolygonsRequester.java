@@ -8,10 +8,11 @@ import java.util.List;
 
 import org.ffo.navtool.gps.KmlPolygons;
 import org.ffo.navtool.gps.PointGps;
+import org.ffo.navtool.gps.PointXY;
 
 /**
  * Cette classe permet de chercher de polygons en fonction de position geographique selon un niveau de zoom.
- * La requête contient toujours 2 critères :
+ * La requÃªte contient toujours 2 critÃ¨res :
  * - niveau de zoom
  * - point central
  * 
@@ -35,18 +36,18 @@ public class PolygonsRequester {
 	
 	
 	/**
-	 * Retourne les polygons pour la zone et le zoom donné. Applique la projection passé en paramètre.
+	 * Retourne les polygons pour la zone et le zoom donnÃ©. Applique la projection passÃ© en paramÃ¨tre.
 	 * @param zoom
 	 * @param gps
 	 * @param proj
 	 * @return
 	 */
 	public List<List<Point>> getPolygons(ZoomLevel zoom, PointGps gps, Projection proj) {		
-		//La zone limite est délimitée par la valeur du zoom et le point GPS 
-		//Le point GPS est "snappé" au centre de la zone de façon à ce que les carrés retournée soint toujours les mêmes (pour pour pouvoir les mettre en cash)
-		//On considère que la carte est quadrillée de cases de la largeur du zoom avec comme pointGps (0,0) comme centre de case de base
-		// donc par exemple sur les x, et pour un zoom de 5 miles, les limites de case sont tous les 5°  à partir de 2.5°
-		//C'est equivantel à un arrondi à l'entier appliqué a différente echelle
+		//La zone limite est dï¿½limitï¿½e par la valeur du zoom et le point GPS 
+		//Le point GPS est "snappï¿½" au centre de la zone de faï¿½on ï¿½ ce que les carrï¿½s retournï¿½e soint toujours les mï¿½mes (pour pour pouvoir les mettre en cash)
+		//On considï¿½re que la carte est quadrillï¿½e de cases de la largeur du zoom avec comme pointGps (0,0) comme centre de case de base
+		// donc par exemple sur les x, et pour un zoom de 5 miles, les limites de case sont tous les 5ï¿½  ï¿½ partir de 2.5ï¿½
+		//C'est equivantel ï¿½ un arrondi ï¿½ l'entier appliquï¿½ a diffï¿½rente echelle
 		float lon = (float) Math.rint(gps.getLongitude() / zoom.getTailleCase()) * zoom.getTailleCase();
 		float lat = (float) Math.rint(gps.getLatitude() / zoom.getTailleCase()) * zoom.getTailleCase();
 		PointGps snap = new PointGps(lat, lon);
@@ -55,7 +56,7 @@ public class PolygonsRequester {
 	}
 	
 	/**
-	 * Méthode cacheable
+	 * MÃ©thode cacheable
 	 * @param zoom
 	 * @param gps
 	 * @param proj
@@ -64,15 +65,16 @@ public class PolygonsRequester {
 	private List<List<Point>> _getPolygons(ZoomLevel zoom, PointGps centre, Projection proj) {
 		List<List<Point>> retour = new ArrayList<List<Point>>();
 		List<KmlPolygons> polys = landDefs.get(zoom).getPolygons();
-		
+		Point pt;
+		PointXY ptxy;
 		for (KmlPolygons pol : polys) {
 			for(List<PointGps> polygon : pol.getPolygons()) {
 				for (int i = 0; i < polygon.size(); i++) {
 					if (isPointInside(zoom, centre, polygon.get(i))) {
-						pt = mproj.getPixelPoint(polygon.get(i), frameSize);
+						pt = proj.getPixelPoint(polygon.get(i), frameSize);
 					}
-					ptxy = mproj.getXY(polygon.get(i));	
-					pt = mproj.getPixelPoint(ptxy, frameSize);
+					ptxy = proj.getXY(polygon.get(i));	
+					pt = proj.getPixelPoint(ptxy, frameSize);
 					
 					xs[i] = pt.x;
 					ys[i] = pt.y;

@@ -25,6 +25,7 @@ import org.ffo.navtool.gps.PointGps;
  * En théorie cet objet est utilisable quelque soit la projection. Il défini un carré sur une sphère
  * dont le centre est le point GPS et le zoom la largeur. Les 2 sont exprimés en degrès décimaux.  
  * <br>
+ modif pour commit
  * @author administrator - 11 févr. 2013
  * <br>
  */

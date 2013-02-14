@@ -26,11 +26,18 @@ public class CylEquiProjection implements Projection {
 
 	public Point getPixelPoint(PointXY pxy, Point frame) {
 		Point pixel = new Point();
-		//X : le zero de la frame correspond � -180
-		pixel.x = (int) ((pxy.getX() + 180) * frame.x/(2*180));
+		//X : le zero de la frame correspond à -180
+		//pixel.x = (int) ((pxy.getX() + 180) * frame.x/(2*180));
 		
-		//Y le sens est invers� et le zero de la frame correspond � 90
-		pixel.y = (int) ( - (pxy.getY() - 90 ) * frame.y/180);
+		//Y le sens est inversé et le zero de la frame correspond à 90
+		//pixel.y = (int) ( - (pxy.getY() - 90 ) * frame.y/180);
+		
+		//X : le zero de la frame correspond à 0°
+        pixel.x = (int) (pxy.getX() * frame.x/360);
+        
+        //Y le sens est inversé et le zero de la frame correspond à 0°
+        pixel.y = (int) ( - (pxy.getY() ) * frame.y/180);
+		
 		return pixel;
 	}
 

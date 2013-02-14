@@ -29,7 +29,7 @@ public class Json {
 	// public static String oceanKmlFile =
 	// "C:/travail/JeuVoile/worldsataset/ne_110m_ocean/ne_110m_ocean.kml";
 
-	public static String oceanKmlFile = "C:/travail/JeuVoile/worldsataset/ne_50m_land/ne_50m_land.kml";
+	public static String oceanKmlFile = "C:/dev/frederic/JeuVoile/worldsataset/ne_50m_land/ne_50m_land.kml";
 
 	private KmlCountryParser parser;
 	private Projection mproj;
@@ -37,7 +37,7 @@ public class Json {
 	private List<String> traceList;
 	
 	public static void main(String[] args) {
-		Json json = new Json(new Point(30720, 17280));
+		Json json = new Json(new Point(19200, 10800));
 		json.paint();
 		for (String string : json.landList) {
 			LOGJ.debug("\"" + string + "\",");	

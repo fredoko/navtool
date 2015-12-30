@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration>
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	
+	<!--Daily rolling file appender -->
+	<appender name="FILE"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<File>C:/travail/JeuVoile/sail.log</File>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<FileNamePattern>logFile.%d{yyyy-MM-dd}.log</FileNamePattern>
+		</rollingPolicy>
+
+		<encoder>
+			<Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</Pattern>
+		</encoder>
+	</appender>
+	
+	<appender name="FILE_JSON"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<File>C:/travail/JeuVoile/json.log</File>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<FileNamePattern>logFile.%d{yyyy-MM-dd}.log</FileNamePattern>
+		</rollingPolicy>
+
+		<encoder>
+			<Pattern>%msg%n</Pattern>
+		</encoder>
+	</appender>
+
+	<logger name="JSON" level="DEBUG" additivity="false">
+		<appender-ref ref="FILE_JSON" />
+	</logger>
+
+	<logger name="org.ffo.sail.windtool" level="DEBUG" additivity="false">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="FILE" />
+	</logger>
+
+	<root level="ERROR">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="FILE" />
+	</root>
+</configuration>

@@ -1,0 +1,91 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Hello World</title>
+<body>
+<script src="pixi.min.js"></script>
+<script>
+
+//Test that Pixi is working
+console.log(PIXI);
+
+var Container = PIXI.Container,
+    autoDetectRenderer = PIXI.autoDetectRenderer,
+    loader = PIXI.loader,
+    resources = PIXI.loader.resources,
+    Sprite = PIXI.Sprite;
+    TextureCache = PIXI.utils.TextureCache;
+
+//Create the renderer
+var renderer = PIXI.autoDetectRenderer(256, 256, {antialias: false, transparent: false, resolution: 1});
+
+renderer.view.style.border = "1px dashed black";
+renderer.backgroundColor = 0x961639;
+
+
+
+renderer.autoResize = true;
+renderer.resize(512, 512);
+
+//Add the canvas to the HTML document
+document.body.appendChild(renderer.view);
+
+//Create a container object called the `stage`
+var stage = new PIXI.Container();
+
+//Tell the `renderer` to `render` the `stage`
+renderer.render(stage);
+
+//Use Pixi's built-in `loader` object to load an image
+PIXI.loader
+  .add("images/cat.png")
+  .add("images/tileset.png")
+  .on("progress", loadProgressHandler)
+  .load(setup);
+
+//This `setup` function will run when the image has loaded
+function setup() {
+
+   var texture = TextureCache["images/tileset.png"];
+     
+  //Create the `cat` sprite from the texture
+  var cat = new PIXI.Sprite(
+    PIXI.loader.resources["images/cat.png"].texture
+  );
+  
+  cat.position.set(96, 96);
+  cat.scale.set(0.5, 0.5);
+  //cat.rotation = 3.14;
+  cat.anchor.set(0.5,0.5);
+  //cat.pivot.set(32, 32) idem as anchor but in pixel instead of ratio
+  
+  //sprite from the tile set
+  var rectangle = new PIXI.Rectangle(192, 128, 64, 64);
+  //Tell the texture to use that rectangular section
+  texture.frame = rectangle;
+  //Create the sprite from the texture
+  var rocket = new Sprite(texture);
+  rocket.position.set(15, 15);
+  
+  //Add the cat to the stage
+  stage.addChild(cat);
+  stage.addChild(rocket);
+
+  //Render the stage   
+  renderer.render(stage);
+}
+
+function loadProgressHandler(loader, resource) {
+
+  //Display the file `url` currently being loaded
+  console.log("loading: " + resource.url); 
+
+  //Display the precentage of files currently loaded
+  console.log("progress: " + loader.progress + "%"); 
+
+  //If you gave your files names as the first argument 
+  //of the `add` method, you can access them like this
+  //console.log("loading: " + resource.name);
+}
+
+</script>
+</body>

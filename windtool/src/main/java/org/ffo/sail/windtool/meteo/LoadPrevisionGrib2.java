@@ -69,7 +69,7 @@ public class LoadPrevisionGrib2 {
     /**
      * Chemin variable en fonction de l'environnment d'installation.
      */
-    private String cheminArchivage = "C:/travail/JeuVoile/archiveGrib/";
+    private String cheminArchivage = "C:/dev/repogit/navtool/archiveGrib";
 
     public static void main(String[] args) {
         // Carte carte = new Carte(1,-45,-55,-136,177);

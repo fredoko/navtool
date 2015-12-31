@@ -7,13 +7,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Représente la polaire d'un bateau,
+ * ReprÃ©sente la polaire d'un bateau,
  * L'objet est de retourner une vitesse de bateau selon une vitesse de vent et un angle de bateau par rapport au vent.
- * Si la polaire est incomplète elle doit être interpolée. 
+ * Si la polaire est incomplÃ¨te elle doit Ãªtre interpolÃ©e. 
  * 
- * L'interpolation est faite à la demande.
+ * L'interpolation est faite Ã  la demande.
  * 
- * On utilise des TreeMap pour stocker les valeurs, ainsi on peut récupérer les valeurs immédiatement inférieur et supérieure par rapport à une clé.
+ * On utilise des TreeMap pour stocker les valeurs, ainsi on peut rÃ©cupÃ©rer les valeurs immÃ©diatement infÃ©rieur et supÃ©rieure par rapport Ã  une clÃ©.
  * @author Fred
  *
  */
@@ -26,8 +26,8 @@ public class Polaire {
 		
 	
 	/**
-	 * Calcule la vitesse du bateau par rapport à l'angle et la vitesse du vent
-	 * @param angle en degrés
+	 * Calcule la vitesse du bateau par rapport Ã  l'angle et la vitesse du vent
+	 * @param angle en degrÃ©s
 	 * @param vitesseVent en noeuds
 	 * @return vitesse en noeuds
 	 */

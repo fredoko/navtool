@@ -28,15 +28,15 @@
 		<jersey-json.version>1.5</jersey-json.version>
 		<jsr311-api.version>1.1</jsr311-api.version>
 		<junit.version>4.8.1</junit.version>
-		<hibernate-core.version>3.3.1.GA</hibernate-core.version>
-		<hibernate-entitymanager.version>3.4.0.GA</hibernate-entitymanager.version>
-		<hibernate-ehcache.version>3.3.1.GA</hibernate-ehcache.version>
+		<hibernate-core.version>5.0.3.Final</hibernate-core.version>
+		<hibernate-entitymanager.version>5.0.3.Final</hibernate-entitymanager.version>
+		<hibernate-ehcache.version>5.0.3.Final</hibernate-ehcache.version>
 		<hsqldb.version>1.8.0.10</hsqldb.version>
 		<logback-classic.version>1.0.9</logback-classic.version>
-		<persistence-api.version>1.0</persistence-api.version>
+		<persistence-api.version>1.0.2</persistence-api.version>
 		<slf4j.version>1.6.1</slf4j.version>
 		<servlet-api.version>2.5</servlet-api.version>
-		<spring.version>3.2.0.RELEASE</spring.version>		
+		<spring.version>4.2.4.RELEASE</spring.version>		
 		<transaction-api.version>1.1</transaction-api.version>
 		
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

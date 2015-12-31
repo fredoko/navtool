@@ -1,2 +1,2 @@
-wgrib2.exe -match ":UGRD"  C:\dev\repogit\navtool\archiveGrib\20151230-06\gfs.t06z.pgrb2.1p00.f000 -csv  target C:\dev\repogit\navtool\archiveGrib\20151230-06\gfs.t06z.pgrb2.1p00.f000-UGRD.csv
-wgrib2.exe -match ":VGRD"  C:\dev\repogit\navtool\archiveGrib\20151230-06\gfs.t06z.pgrb2.1p00.f000 -csv  target C:\dev\repogit\navtool\archiveGrib\20151230-06\gfs.t06z.pgrb2.1p00.f000-VGRD.csv
+wgrib2.exe -match ":UGRD"  C:\dev\repogit\navtool\archiveGrib\20151230-06\gfs.t06z.pgrb2.1p00.f003 -csv  C:\dev\repogit\navtool\archiveGrib\20151230-06\gfs.t06z.pgrb2.1p00.f003-UGRD.csv
+wgrib2.exe -match ":VGRD"  C:\dev\repogit\navtool\archiveGrib\20151230-06\gfs.t06z.pgrb2.1p00.f003 -csv  C:\dev\repogit\navtool\archiveGrib\20151230-06\gfs.t06z.pgrb2.1p00.f003-VGRD.csv

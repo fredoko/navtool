@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Cet objet permet de manipuler des points avec la projection de mercator,
- * projection cylindriqie tangente à l'equateur
+ * projection cylindriqie tangente Ã  l'equateur
  * @author Fred
  *
  */
@@ -58,13 +58,13 @@ public class MercatorProjection implements Projection {
 //			LOG.debug(pxy.getY());
 //		}
 		Point pixel = new Point();
-		//X : le zero de la frame correspond à -PI
+		//X : le zero de la frame correspond Ã  -PI
 		pixel.x = (int) ((pxy.getX() + Math.PI) * frame.x/(2*Math.PI));
 		
 		// le raport entre xet y est en fait PI est non le rapport de la frame
 		double rapportXY = 6.2;
 		double offsety = 3;
-		//Y le sens est inversé et le zero de la frame correspond à 1
+		//Y le sens est inversÃ© et le zero de la frame correspond Ã  1
 		pixel.y = (int) ( - (pxy.getY() - offsety ) * frame.y/rapportXY);
 		return pixel;
 	}

@@ -8,14 +8,14 @@ import org.ffo.navtool.gps.Carte;
 import org.ffo.navtool.gps.PointGps;
 
 /**
- * Contient les prévisions de vents pour une date donnée (datePrevisionDebut) réalisée à une date donnée (dateCreationPrevision).
- * Cette prévision est valable un certain temps.
+ * Contient les prÃ©visions de vents pour une date donnÃ©e (datePrevisionDebut) rÃ©alisÃ©e Ã  une date donnÃ©e (dateCreationPrevision).
+ * Cette prÃ©vision est valable un certain temps.
  * 
- * L'index de la map est la concatenation latitude et longitude, multiplié par la precision pour obtenir un entier.
- * Ainsi pour une carte de précision 10 soit (0.1°). la case vent [45.2°, -152.1°] est indexée par 452:-1521 
+ * L'index de la map est la concatenation latitude et longitude, multipliÃ© par la precision pour obtenir un entier.
+ * Ainsi pour une carte de prÃ©cision 10 soit (0.1Â°). la case vent [45.2Â°, -152.1Â°] est indexÃ©e par 452:-1521 
  * 
  * 
- *  C'est la précision de la carte sousjacente qui determine la taille de la grille.
+ *  C'est la prÃ©cision de la carte sousjacente qui determine la taille de la grille.
  *   
  * 
  * @author Fred
@@ -28,24 +28,24 @@ public class PrevisionVent {
 	private Carte carte;
 	
 	/**
-	 * Date à laquelle la prévision a été faite
+	 * Date Ã  laquelle la prÃ©vision a Ã©tÃ© faite
 	 */
 	private Date dateCreationPrevision;
 	
 	/**
-	 * Date de début de la prévision.
+	 * Date de dÃ©but de la prÃ©vision.
 	 */
 	private Date datePrevisionDebut;
 	
 	/**
-	 * prériode de validité en heures
+	 * prÃ©riode de validitÃ© en heures
 	 */
 	private int  periodeValidite;
 	
 	
 	
 	/**
-	 * DEtermine la case vent correspondante au point gps. Ce get calcule la bonne case selon la précision de la carte.
+	 * DEtermine la case vent correspondante au point gps. Ce get calcule la bonne case selon la prÃ©cision de la carte.
 	 * @param pointGps
 	 * @return
 	 */

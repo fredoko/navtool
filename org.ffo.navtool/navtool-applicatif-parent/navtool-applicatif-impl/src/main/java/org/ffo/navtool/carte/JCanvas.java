@@ -89,7 +89,7 @@ public class JCanvas extends JPanel {
 		//parcours de tous les pays ou placemark du fichier
 		for (KmlPolygons pol : liste) {
 			
-			//slection sur le code du placemrk (en général code ISO, mais ici on n'a que PA1)
+			//slection sur le code du placemrk (en gÃ©nÃ©ral code ISO, mais ici on n'a que PA1)
 			//if(pol.getCode().equals("PA1") || pol.getCode().equals("PA2")) {				
 				Point pt;
 				PointXY ptxy;

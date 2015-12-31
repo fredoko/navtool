@@ -40,9 +40,9 @@ public class LoadPolaireVR {
 		
 		try {
 			BufferedReader in  = new BufferedReader(new FileReader(path));
-			//lire entete contenant les vitesses vent, la première entrée de la ligne vide est vide, séparateur ";"
-			//les nombres ont un séparatuer décimal "."
-			//ensuite chaque case est composé d'une vitesse de bateau et du nméro de voile
+			//lire entete contenant les vitesses vent, la premiÃ¨re entrÃ©e de la ligne vide est vide, sÃ©parateur ";"
+			//les nombres ont un sÃ©paratuer dÃ©cimal "."
+			//ensuite chaque case est composÃ© d'une vitesse de bateau et du nmÃ©ro de voile
 			String line = in.readLine();
 			String[] ts =  line.split(";");
 			vitesseVent = new float[ts.length -1];
@@ -90,9 +90,9 @@ public class LoadPolaireVR {
 		
 		try {
 			BufferedReader in  = new BufferedReader(new FileReader(path));
-			//lire entete contenant les vitesses vent, la première entrée de la ligne vide est vide, séparateur ";"
-			//les nombres ont un séparatuer décimal "."
-			//ensuite chaque case est composé d'une vitesse de bateau et du nméro de voile
+			//lire entete contenant les vitesses vent, la premiÃ¨re entrÃ©e de la ligne vide est vide, sÃ©parateur ";"
+			//les nombres ont un sÃ©paratuer dÃ©cimal "."
+			//ensuite chaque case est composÃ© d'une vitesse de bateau et du nmÃ©ro de voile
 			String line = in.readLine();
 			String[] ts =  line.split(";");
 			vitesseVent = new double[ts.length -1];

@@ -7,10 +7,10 @@ import java.util.TreeMap;
 import org.ffo.navtool.gps.PointGps;
 
 /**
- * Cet objet enveloppe les différentes prévision et retourne a un instant T la bonne prévision.
+ * Cet objet enveloppe les diffÃ©rentes prÃ©vision et retourne a un instant T la bonne prÃ©vision.
  * 
- * Cet objet est censé être mis à jour au fil de l'eau lorsque de nouveau fichier meteo arrive.
- * Les prévisions sont stockée sous forme d'un tree pour une recherche par date facilitée, permet de gérer les fichiers meteo ou les intervalle de prévision
+ * Cet objet est censÃ© Ãªtre mis Ã  jour au fil de l'eau lorsque de nouveau fichier meteo arrive.
+ * Les prÃ©visions sont stockÃ©e sous forme d'un tree pour une recherche par date facilitÃ©e, permet de gÃ©rer les fichiers meteo ou les intervalle de prÃ©vision
  * plus ou mons important. 
  * @author Fred
  *
@@ -18,7 +18,7 @@ import org.ffo.navtool.gps.PointGps;
 public class Meteo {
 	
 	/**
-	 * Fichier meteo indexés sur leur date de debut de prévision.
+	 * Fichier meteo indexÃ©s sur leur date de debut de prÃ©vision.
 	 */
 	TreeMap<Date, PrevisionVent> arbrePrevision = new TreeMap<Date, PrevisionVent>();
 	
@@ -34,7 +34,7 @@ public class Meteo {
 	}
 	
 	/**
-	 * Ajouter la prevision en paramètre, remplace la précédente si elle existe déjà.
+	 * Ajouter la prevision en paramÃ¨tre, remplace la prÃ©cÃ©dente si elle existe dÃ©jÃ .
 	 * @param prev prevision
 	 */
 	public void ajouterPrevision(PrevisionVent prev) {

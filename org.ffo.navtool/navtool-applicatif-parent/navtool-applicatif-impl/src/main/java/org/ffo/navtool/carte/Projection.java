@@ -8,16 +8,16 @@ import org.ffo.navtool.gps.PointXY;
 public interface Projection {
 
 	/**
-	 * On part du principe que la carte est centrée en lon=0 et lat=0, 
-	 * Aucun ratio n'est appliqué sur le résultat, ainsi les x varient de 0 à 2PI
-	 * les y varies de -1 à 1 
+	 * On part du principe que la carte est centrÃ©e en lon=0 et lat=0, 
+	 * Aucun ratio n'est appliquÃ© sur le rÃ©sultat, ainsi les x varient de 0 Ã  2PI
+	 * les y varies de -1 Ã  1 
 	 * 
 	 * @return
 	 */
 	public abstract PointXY getXY(PointGps gps);
 
 	/**
-	 * Calcule le point en pixel d'après le poing gps
+	 * Calcule le point en pixel d'aprÃ¨s le poing gps
 	 * @param gps
 	 * @param frame
 	 * @return
@@ -25,8 +25,8 @@ public interface Projection {
 	public abstract Point getPixelPoint(PointGps gps, Point frame);
 
 	/**
-	 * Calcule le point en pixel d'après le poing gps.
-	 * on ignore les points dont la latitude est supérieur au PI/2 (comprend pas pourquoi on obtient une projection 37rad pour 90°)
+	 * Calcule le point en pixel d'aprÃ¨s le poing gps.
+	 * on ignore les points dont la latitude est supÃ©rieur au PI/2 (comprend pas pourquoi on obtient une projection 37rad pour 90Â°)
 	 * @param gps
 	 * @param frame
 	 * @return

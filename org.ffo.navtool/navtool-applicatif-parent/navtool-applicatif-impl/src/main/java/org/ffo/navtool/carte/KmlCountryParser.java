@@ -18,7 +18,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 /**
- * Cet objet permet de parse un fichier kml(xml) an sax afin de récupérer tous
+ * Cet objet permet de parse un fichier kml(xml) an sax afin de rÃ©cupÃ©rer tous
  * les polygons de pays.
  * 
  * @author Fred
@@ -104,7 +104,7 @@ public class KmlCountryParser extends DefaultHandler {
 		String[] coord;
 		String[] gpst;	
 		String cs;
-		// On ne détecte que la fin de la balise coordiantes et placemark
+		// On ne dÃ©tecte que la fin de la balise coordiantes et placemark
 		if (qName.equals("Placemark")) {
 			if (currentCountry != null) {
 				polygonsList.add(currentCountry);
@@ -155,7 +155,7 @@ public class KmlCountryParser extends DefaultHandler {
 	
 	
 	/**
-	 * Détermine les polygons pour le cadre donné.
+	 * DÃ©termine les polygons pour le cadre donnÃ©.
 	 * 
 	 * @param sw
 	 * @param ne

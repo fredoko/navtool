@@ -22,15 +22,6 @@ import org.ffo.sail.windtool.Carte;
 public class LoadPrevisionGrib2 {
 
     /**
-     * Chaine de récupération des fichiers.
-     * file=gfs.t00z.pgrbf06.grib2&lev_10_m_above_ground
-     * =on&var_UGRD=on&var_VGRD=
-     * on&leftlon=-179&rightlon=180&toplat=0&bottomlat=-
-     * 70&dir=%2Fgfs.2012122300";<br>
-     * file=gfs.t00z.pgrbf[tranche].grib2&lev_10_m_above_ground
-     * =on&var_UGRD=on&var_VGRD
-     * =on&leftlon=[ouestLon]&rightlon=[estlon]&toplat=[nordlat
-     * ]&bottomlat=[sudLat]&dir=%2Fgfs.[jour]";
      *
      * Chaine exemple de
      * http://nomads.ncep.noaa.gov/txt_descriptions/grib_filter_doc.shtml <br>
@@ -82,25 +73,6 @@ public class LoadPrevisionGrib2 {
         // // TODO Auto-generated catch block
         // e.printStackTrace();
         // }
-        // Pour Virtual regatta au changement de 8h (CET donc 7h UTC), les
-        // previsions sont celles générées à minuit utc (00),
-        // la méteo "temps réel" de 8h00 CET est la prévision de 6h utc(06),
-        // donc 7h CET
-        // On a donc un décalage de une heure au départ, mais ce n'ets rien avec
-        // le fait que pendant 12 heure on garde la même prévision
-        // VR aurait pu prendre les fichiers générés à 6h00 utc (soit 7h CET)
-        // mais ca devait faire trop court pour les integrer dans leur système.
-
-        // PrevisionVent prev12 = getPrevision(carte, date, "00", "108");
-        // PrevisionVent prev24 = getPrevision(carte, date, "00", "120");
-        // PrevisionVent prev36 = getPrevision(carte, date, "00", "132");
-        // PrevisionVent prev48 = getPrevision(carte, date, "00", "144");
-
-        // gribToCsv(cheminArchivage + "20121225/" + "gfs.t00z.pgrbf06.grib2");
-        // gribToCsv(cheminArchivage + "20121225/" + "gfs.t00z.pgrbf108.grib2");
-        // gribToCsv(cheminArchivage + "20121225/" + "gfs.t00z.pgrbf120.grib2");
-        // gribToCsv(cheminArchivage + "20121225/" + "gfs.t00z.pgrbf132.grib2");
-        // gribToCsv(cheminArchivage + "20121225/" + "gfs.t00z.pgrbf144.grib2");
 
     }
 
@@ -175,10 +147,23 @@ public class LoadPrevisionGrib2 {
         // gribToCsv(pathGrib);
 
         // Le fichier csv contient
-        // -la longitude en 5 position
-        // - la latitude en 6 position
-        // - la vitesse en m/s en 7 position
-        // les deux fichiers sont ordonnés dans le même sens
+        // - la date où la prevision est faite (2015-12-30 06:00:00). donc ,
+        // Heurecreation
+        // - la date de la prevision (2015-12-30 09:00:00). Cette date
+        // correspond donc a heureCreation + tranche
+        // - le type de données (UGRD ou CGRD dans notre cas
+        // - le niveau
+        // - la longitude en degrés
+        // - la latitude en degrés
+        // - la vitesse en m/s
+        // les deux fichiers sont ordonnés dans le même sens, ils font 5.3mo
+        // chacun pour 1 seule composante.
+        // Ainsi pour une journée on a 5.3 * 2 (2 composantes) * 4 (4
+        // prévisions) * 8 (8 tranches par jours) * 10 (prev sur 10 jours) = 3.4
+        // go
+        // Impossible donc de garder ces fichiers csv, pour les reprises une
+        // prévision de journée est restockée dns un csv comme suit
+        // tranche,lat,lon, vitesse en m/s, angle
 
         PrevisionVent prev = new PrevisionVent();
         try {
